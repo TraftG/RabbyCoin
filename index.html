@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unity WebGL</title>
+    <script>
+        // Функция для открытия Telegram Wallet
+        function connectTelegramWallet() {
+            let webApp = window.Telegram.WebApp;
+            webApp.ready();
+
+            // Показываем кнопку "Connect Telegram Wallet"
+            webApp.MainButton.text = "Connect Telegram Wallet";
+            webApp.MainButton.show();
+
+            // Когда пользователь нажимает кнопку, открываем Telegram Wallet
+            webApp.MainButton.onClick(function() {
+                window.Telegram.openLink('tg://wallet');
+            });
+        }
+    </script>
+</head>
+<body>
+    <!-- Контейнер для Unity WebGL -->
+    <div id="unityContainer" style="width: 100%; height: 100%;"></div>
+
+    <!-- Подключение Unity WebGL билдов -->
+    <script src="Build/UnityLoader.js"></script>
+    <script>
+        // Инстанциируем Unity WebGL
+        var gameInstance = UnityLoader.instantiate("unityContainer", "Build/WebGL.json", { onProgress: UnityProgress });
+
+        // После инициализации Unity вызываем функцию JavaScript
+        gameInstance.SendMessage('GameObjectName', 'ConnectTelegramWallet');
+    </script>
+</body>
+</html>
